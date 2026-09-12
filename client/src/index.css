@@ -1,0 +1,347 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Main Dark Canvas Colors */
+    --bg-main: #07070a;
+    --text-main: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    
+    /* Glassmorphism Card Properties */
+    --card-bg: rgba(13, 13, 20, 0.7);
+    --card-border: rgba(255, 255, 255, 0.06);
+    --card-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+    
+    /* Diagnostic Alert Colors */
+    --color-primary: #3b82f6;
+    --color-primary-glow: rgba(59, 130, 246, 0.15);
+    --color-safe: #10b981;
+    --color-safe-glow: rgba(16, 185, 129, 0.15);
+    --color-suspicious: #f59e0b;
+    --color-suspicious-glow: rgba(245, 158, 11, 0.15);
+    --color-scam: #ef4444;
+    --color-scam-glow: rgba(239, 68, 68, 0.15);
+    
+    /* Input Elements */
+    --nav-bg: rgba(7, 7, 10, 0.7);
+    --input-bg: rgba(255, 255, 255, 0.02);
+    --input-border: rgba(255, 255, 255, 0.07);
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Custom Scrollbar Styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #07070a;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 99px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.22);
+  }
+}
+
+@layer components {
+  /* Dynamic Grid Background Overlay */
+  .grid-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    background-size: 28px 28px;
+    background-position: center;
+  }
+
+  /* Atmospheric Orbs Glow Background */
+  .orb-glow {
+    position: fixed;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    filter: blur(140px);
+    opacity: 0.15;
+    z-index: 0;
+    pointer-events: none;
+    mix-blend-mode: plus-lighter;
+  }
+
+  .orb-blue {
+    background: radial-gradient(circle, var(--color-primary) 0%, transparent 70%);
+    top: -200px;
+    right: -100px;
+    animation: pulse-slow 12s ease-in-out infinite alternate;
+  }
+
+  .orb-purple {
+    background: radial-gradient(circle, #8b5cf6 0%, transparent 70%);
+    bottom: -200px;
+    left: -100px;
+    animation: pulse-slow 15s ease-in-out infinite alternate-reverse;
+  }
+
+  /* High-Fidelity Glass Cards */
+  .premium-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 24px;
+    box-shadow: var(--card-shadow);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+  }
+
+  .premium-card:hover {
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+
+  /* Premium Focus-Glowing Inputs */
+  .input-premium {
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 14px;
+    padding: 14px 18px;
+    color: var(--text-main);
+    font-size: 14px;
+    outline: none;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .input-premium:focus {
+    border-color: rgba(59, 130, 246, 0.6);
+    background: rgba(255, 255, 255, 0.04);
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15), inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .input-premium::placeholder {
+    color: var(--text-muted);
+  }
+
+  /* Glowing Linear CTA Button */
+  .btn-premium {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 14px 28px;
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+
+  .btn-premium:hover:not(:disabled) {
+    transform: translateY(-1.5px);
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+
+  .btn-premium:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(59, 130, 246, 0.2);
+  }
+
+  .btn-premium:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .btn-secondary {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--input-border);
+    border-radius: 14px;
+    padding: 12px 24px;
+    color: var(--text-main);
+    font-weight: 500;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s;
+  }
+
+  .btn-secondary:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  /* Sliding Tabs Toggle */
+  .tabs-container {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--input-border);
+    border-radius: 12px;
+    padding: 4px;
+    display: inline-flex;
+    gap: 2px;
+  }
+
+  .tab-pill {
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
+
+  .tab-pill.active {
+    background: rgba(255, 255, 255, 0.08);
+    color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .tab-pill.inactive {
+    background: transparent;
+    color: var(--text-secondary);
+  }
+
+  .tab-pill.inactive:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  /* Monospace Terminal Logs Console */
+  .console-container {
+    background: #09090e;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    box-shadow: inset 0 2px 10px rgba(0,0,0,0.8), 0 10px 30px rgba(0,0,0,0.5);
+    overflow: hidden;
+  }
+
+  .console-header {
+    background: rgba(255, 255, 255, 0.02);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .console-body {
+    padding: 18px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #e2e8f0;
+    max-height: 350px;
+    overflow-y: auto;
+  }
+
+  .console-line {
+    margin-bottom: 6px;
+    display: flex;
+    gap: 8px;
+  }
+
+  .console-time {
+    color: #64748b;
+    flex-shrink: 0;
+  }
+
+  .console-tag {
+    font-weight: bold;
+    flex-shrink: 0;
+  }
+
+  .console-tag-info { color: #3b82f6; }
+  .console-tag-success { color: #10b981; }
+  .console-tag-warn { color: #f59e0b; }
+  .console-tag-error { color: #ef4444; }
+
+  /* Verdict Glow Badges */
+  .verdict-badge {
+    padding: 6px 14px;
+    border-radius: 99px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .badge-safe {
+    background: rgba(16, 185, 129, 0.08);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    color: var(--color-safe);
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.05);
+  }
+
+  .badge-suspicious {
+    background: rgba(245, 158, 11, 0.08);
+    border: 1px solid rgba(245, 158, 11, 0.25);
+    color: var(--color-suspicious);
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.05);
+  }
+
+  .badge-scam {
+    background: rgba(239, 68, 68, 0.08);
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    color: var(--color-scam);
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.05);
+  }
+
+  /* Micro animations */
+  .fade-in {
+    animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes pulse-slow {
+    0%, 100% {
+      transform: scale(1) translate(0px, 0px);
+    }
+    50% {
+      transform: scale(1.08) translate(20px, -20px);
+    }
+  }
+
+  .cursor-blink::after {
+    content: '_';
+    animation: blink 0.8s infinite;
+  }
+
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+}
